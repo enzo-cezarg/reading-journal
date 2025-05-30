@@ -9,20 +9,37 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 function App() {
 
   const [books, setBooks] = useState([
-    {id: 1, title: 'Crime e Castigo', author: 'Fiódor Dostoiévski', genre: 'Romance', date: '2025-05-29'}
+    //{id: 1, title: 'Crime e Castigo', author: 'Fiódor Dostoiévski', genre: 'Romance', date: '2025-05-29'}
   ])
 
   const handleAddBook = (newBookData) => {
     console.log('Função handleAddBook chamada no App.jsx com: ', newBookData)
-		newBookData = {id: books.at(books.length-1).id + 1, ...newBookData}
-    setBooks([...books, newBookData])
+    if (books.length > 0) {
+      newBookData = {id: books.at(books.length-1).id + 1, ...newBookData}
+    } else {
+      newBookData = {id: 1, ...newBookData}
+    }
+    setBooks([...books, newBookData]);
   }
+
+  const handleDeleteBook = (id) => {
+    setBooks(prevBooks => prevBooks.filter(book => book.id !== id));
+  }
+
+  const handleUpdateBook = (updatedBookData) => {
+  setBooks(prevBooks =>
+    prevBooks.map(book =>
+      book.id === updatedBookData.id ? { ...book, ...updatedBookData } : book
+    )
+  );
+  console.log('Livro atualizado no App.jsx:', updatedBookData);
+  };
 
   const routes = [
     { path: '/', element: <Home />, label: 'Página Inicial' },
     { path: '/sobre', element: <About />, label: 'Sobre' },
-    { path: '/book-list', element: <BookList books={books}/>, label: 'Lista de Livros' },
-    { path: '/book-form', element: <BookForm onFormSubmit={handleAddBook}/>, label: 'Cadastrar' },
+    { path: '/book-list', element: <BookList books={books} onDelete={handleDeleteBook} onUpdate={handleUpdateBook}/>, label: 'Lista de Livros' },
+    { path: '/book-form', element: <BookForm onFormSubmit={handleAddBook} label={'Cadastrar'}/>, label: 'Cadastrar' },
   ]
 
   return (

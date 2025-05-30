@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function BookForm({ onFormSubmit }) {
+function BookForm({ onFormSubmit, label }) {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [genre, setGenre] = useState('Romance');
@@ -92,7 +92,7 @@ function BookForm({ onFormSubmit }) {
           type="submit"
           className="w-full flex justify-center py-2 px-4 bg-gray-300"
         >
-          Cadastrar Livro
+          {label}
         </button>
       </form>
     </div>
