@@ -32,8 +32,7 @@ function App() {
       book.id === updatedBookData.id ? { ...book, ...updatedBookData } : book
     )
   );
-  console.log('Livro atualizado no App.jsx:', updatedBookData);
-  };
+  }
 
   const routes = [
     { path: '/', element: <Home />, label: 'Página Inicial' },

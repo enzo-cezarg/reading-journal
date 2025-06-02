@@ -90,7 +90,7 @@ function BookForm({ onFormSubmit, label }) {
         </div>
         <button
           type="submit"
-          className="w-full flex justify-center py-2 px-4 bg-gray-300"
+          className="w-full flex justify-center py-2 px-4 bg-gray-300 rounded"
         >
           {label}
         </button>
