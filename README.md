@@ -3,12 +3,12 @@
 Para executar este projeto:
 
 1. Entre na pasta reading-journal no terminal:
+
 ```
 cd reading-journal
 ```
 
 2. Rode npm install para instalar as dependências do projeto:
-
 
 ```
 npm install
@@ -30,8 +30,7 @@ npm run dev
   ➜  press h + enter to show help
 ```
 
-Após execução do projeto, este é o resultado esperado no navegador:
-![Gif mostrando o resultado esperado ao rodar este projeto](./resultado.gif)
+![Gif mostrando o resultado esperado ao rodar este projeto](./public/projeto-fase-1.gif)
 
 ## Introdução
 
@@ -42,15 +41,18 @@ Este projeto foi desenvolvido para a disciplina de Desenvolvimento de Sistemas F
 Os componentes estão no diretório `./src/components` e eles possuem as seguintes características:
 
 - About:
+
   - Descrição: este componente é uma página simples com informativos à respeito do projeto.
 
 - BookForm:
+
   - `props`
     - label: um parâmetro que define o texto exibido no botão do BookForm, caso haja necessidade de alterar de 'Cadastrar' para 'Salvar Alterações', por exemplo;
-    - onFormSubmit: referência para chamar o método handleAddBook - adiciona livros no array ``books`` encontrado em ``App.jsx`` - do seu componente pai passando os dados do formulário;
+    - onFormSubmit: referência para chamar o método handleAddBook - adiciona livros no array `books` encontrado em `App.jsx` - do seu componente pai passando os dados do formulário;
   - Descrição: este componente é utilizado para cadastrar livros através de um `<form>` e se encontra na página "Cadastrar".
 
 - BookList:
+
   - `props`
     - books: um array com a lista de livros cadastrados que será exibido no componente;
     - onDelete: referência para chamar o método handleDeleteBook do seu componente pai que exclui livros do array `books`;
@@ -58,11 +60,12 @@ Os componentes estão no diretório `./src/components` e eles possuem as seguint
   - Descrição: este componente exibe a lista de livros cadastrados, assim como o formulário para edição deles quando for ativado pelo botão `Editar`.
 
 - Home:
+
   - Descrição: este componente é uma home page simples que contém apenas uma mensagem de boas-vindas. É a página inicial da aplicação.
 
 - NavBar:
   - `props`
-    - navLinks: é utilizado para passar o array ``routes`` com a definição das rotas utilizadas para navegação na aplicação;
+    - navLinks: é utilizado para passar o array `routes` com a definição das rotas utilizadas para navegação na aplicação;
   - Descrição: este componente utiliza Link do React Router para mostrar as páginas disponíveis em uma barra de navegação.
 
 ## Conclusão
