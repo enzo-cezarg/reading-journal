@@ -175,13 +175,13 @@ function BookList({ books, onDelete, onUpdate }) {
             <button
               type="button"
               onClick={handleCancelEdit}
-              className="px-4 py-2 rounded-md text-sm bg-red-500 text-white font-bold transition duration-100 hover:bg-red-600"
+              className="px-4 py-2 rounded-md text-sm bg-red-500 text-white font-medium transition duration-100 hover:bg-red-600"
             >
               Cancelar
             </button>
             <button
               type="submit"
-              className="px-4 py-2 rounded-md text-sm bg-green-500 text-white font-bold transition duration-100 hover:bg-green-600"
+              className="px-4 py-2 rounded-md text-sm bg-green-500 text-white font-medium transition duration-100 hover:bg-green-600"
             >
               Atualizar Livro
             </button>
@@ -209,13 +209,13 @@ function BookList({ books, onDelete, onUpdate }) {
           </div>
           <div className="flex flex-col gap-2">
             <button
-              className="bg-gray-300 py-1 px-3 rounded text-sm"
+              className="border-2 border-black font-medium transition duration-100 hover:bg-gray-200 py-1 px-3 rounded text-sm"
               onClick={() => handleStartEdit(book)}
             >
               Editar
             </button>
             <button
-              className="bg-gray-300 py-1 px-3 rounded text-sm"
+              className="bg-red-500 text-white font-bold transition duration-100 hover:bg-red-600 py-1 px-3 rounded text-sm"
               onClick={() => onDelete(book.id)}
             >
               Excluir

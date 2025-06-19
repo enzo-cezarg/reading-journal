@@ -30,7 +30,11 @@ npm run dev
   ➜  press h + enter to show help
 ```
 
-![Gif mostrando o resultado esperado ao rodar este projeto](./public/projeto-fase-1.gif)
+<div align="center">
+
+  ![Gif mostrando o resultado esperado ao rodar este projeto](./public/projeto-fase-2.gif)
+
+</div>
 
 ## Introdução
 
@@ -48,16 +52,22 @@ Os componentes estão no diretório `./src/components` e eles possuem as seguint
 
   - `props`
     - label: um parâmetro que define o texto exibido no botão do BookForm, caso haja necessidade de alterar de 'Cadastrar' para 'Salvar Alterações', por exemplo;
-    - onFormSubmit: referência para chamar o método handleAddBook - adiciona livros no array `books` encontrado em `App.jsx` - do seu componente pai passando os dados do formulário;
+    - onFormSubmit: referência para chamar o método handleAddBook - adiciona livros na base de dados através de uma chamada POST do Axios;
   - Descrição: este componente é utilizado para cadastrar livros através de um `<form>` e se encontra na página "Cadastrar".
 
 - BookList:
 
   - `props`
-    - books: um array com a lista de livros cadastrados que será exibido no componente;
-    - onDelete: referência para chamar o método handleDeleteBook do seu componente pai que exclui livros do array `books`;
-    - onUpdate: referência para chamar o método handleUpdateBook do seu componente pai que edita um livro específico do array `books`;
+    - books: contém os dados provenientes da API - que foram recuperados através de um método GET dentro de um UseEffect();
+    - onDelete: referência para chamar o método handleDeleteBook do seu componente pai que exclui livros através de uma chamada do método DELETE da API;
+    - onUpdate: referência para chamar o método handleUpdateBook do seu componente pai que edita um livro através de uma chamada do método PUT da API;
   - Descrição: este componente exibe a lista de livros cadastrados, assim como o formulário para edição deles quando for ativado pelo botão `Editar`.
+
+<div align="center">
+
+  ![Gif mostrando o formulário de edição](./public/projeto-fase-2-2.gif)
+
+</div>
 
 - Home:
 
@@ -67,6 +77,31 @@ Os componentes estão no diretório `./src/components` e eles possuem as seguint
   - `props`
     - navLinks: é utilizado para passar o array `routes` com a definição das rotas utilizadas para navegação na aplicação;
   - Descrição: este componente utiliza Link do React Router para mostrar as páginas disponíveis em uma barra de navegação.
+
+## Testes
+
+Foram implementados testes unitários - nos métodos POST e DELETE da API - utilizando Jest, configurado com Babel - arquivo ``babel.config.js`` encontrado na raiz do projeto - para poder interpretar ESModules.
+- Para rodar os testes basta utilizar o comando:
+```
+npm run test
+```
+- A resposta esperada é algo como:
+```
+> reading-journal-fase-1@0.0.0 test
+> jest
+
+ PASS  __tests__/books.test.js
+  addBook
+    √ deve criar um novo livro e retornar os dados criados (6 ms)
+  deleteBook                                                                                                                                                                                            
+    √ deve chamar a API para deletar um livro com o ID correto e retornar a mensagem de sucesso (1 ms)                                                                                 
+
+Test Suites: 1 passed, 1 total                             
+Tests:       2 passed, 2 total                                                      
+Snapshots:   0 total
+Time:        1.48 s, estimated 2 s
+Ran all test suites.
+```
 
 ## Conclusão
 

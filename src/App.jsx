@@ -7,6 +7,7 @@ import BookForm from "./components/BookForm/BookForm";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { addBook, updateBook, deleteBook } from "./api/bookService.js";
 
 function App() {
   const [books, setBooks] = useState([]);
@@ -26,8 +27,7 @@ function App() {
 
   const handleAddBook = async (newBookData) => {
     try {
-      const response = await axios.post("http://localhost:5000/books", newBookData);
-      const createdBook = response.data
+      const createdBook = await addBook(newBookData);
       setBooks((prevBooks) => [...prevBooks, createdBook]);
     } catch (error) {
       alert(`Erro ao atualizar o livro: ${error.response?.status || error.message}`);
@@ -36,7 +36,7 @@ function App() {
 
   const handleDeleteBook = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/books/${id}`);
+      await deleteBook(id);
       setBooks((prevBooks) => prevBooks.filter((book) => book.id !== id));
     } catch (error) {
       alert(`Erro ao atualizar o livro: ${error.response?.status || error.message}`);
@@ -45,8 +45,7 @@ function App() {
 
   const handleUpdateBook = async (updatedBookData) => {
     try {
-      const response = await axios.put(`http://localhost:5000/books`, updatedBookData);
-      const updatedBook = response.data;
+      const updatedBook = await updateBook(updatedBookData);
       setBooks((prevBooks) =>
         prevBooks.map((book) =>
           book.id === updatedBook.id ? updatedBook : book,
