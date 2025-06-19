@@ -3,38 +3,62 @@ import Home from "./components/Home/Home";
 import About from "./components/About/About";
 import BookList from "./components/BookList/BookList";
 import BookForm from "./components/BookForm/BookForm";
-import React, { useState } from "react";
+
+import axios from "axios";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 function App() {
-  const [books, setBooks] = useState([
-    //{id: 1, title: 'Crime e Castigo', author: 'Fiódor Dostoiévski', genre: 'Romance', date: '2025-05-29'}
-  ]);
+  const [books, setBooks] = useState([]);
+  
+  useEffect(() => {
+    const fetchBooks = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/books');
+        setBooks(response.data);
+      } catch (err) {
+        console.error('Erro ao buscar livros:', err);
+      }
+    };
 
-  const handleAddBook = (newBookData) => {
-    console.log("Função handleAddBook chamada no App.jsx com: ", newBookData);
-    if (books.length > 0) {
-      newBookData = { id: books.at(books.length - 1).id + 1, ...newBookData };
-    } else {
-      newBookData = { id: 1, ...newBookData };
+    fetchBooks();
+  }, []);
+
+  const handleAddBook = async (newBookData) => {
+    try {
+      const response = await axios.post("http://localhost:5000/books", newBookData);
+      const createdBook = response.data
+      setBooks((prevBooks) => [...prevBooks, createdBook]);
+    } catch (error) {
+      alert(`Erro ao atualizar o livro: ${error.response?.status || error.message}`);
     }
-    setBooks([...books, newBookData]);
   };
 
-  const handleDeleteBook = (id) => {
-    setBooks((prevBooks) => prevBooks.filter((book) => book.id !== id));
+  const handleDeleteBook = async (id) => {
+    try {
+      await axios.delete(`http://localhost:5000/books/${id}`);
+      setBooks((prevBooks) => prevBooks.filter((book) => book.id !== id));
+    } catch (error) {
+      alert(`Erro ao atualizar o livro: ${error.response?.status || error.message}`);
+    }
   };
 
-  const handleUpdateBook = (updatedBookData) => {
-    setBooks((prevBooks) =>
-      prevBooks.map((book) =>
-        book.id === updatedBookData.id ? { ...book, ...updatedBookData } : book,
-      ),
-    );
+  const handleUpdateBook = async (updatedBookData) => {
+    try {
+      const response = await axios.put(`http://localhost:5000/books`, updatedBookData);
+      const updatedBook = response.data;
+      setBooks((prevBooks) =>
+        prevBooks.map((book) =>
+          book.id === updatedBook.id ? updatedBook : book,
+        ),
+      );
+    } catch (error) {
+      alert(`Erro ao atualizar o livro: ${error.response?.status || error.message}`);
+    }
   };
 
   const routes = [
-    { path: "/", element: <Home />, label: "Página Inicial" },
+    { path: "/", element: <Home />, label: "Início" },
     { path: "/sobre", element: <About />, label: "Sobre" },
     {
       path: "/book-list",
@@ -58,7 +82,7 @@ function App() {
     <Router>
       <div className="min-h-screen bg-gray-100 flex flex-col">
         <NavBar navLinks={routes} />
-        <main className="flex-grow p-4">
+        <main className="flex-grow px-4 pt-32 bg-gradient-to-br from-sky-50 via-purple-50 to-blue-50">
           <Routes>
             {routes.map((rota) => (
               <Route key={rota.path} path={rota.path} element={rota.element} />

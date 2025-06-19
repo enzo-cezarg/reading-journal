@@ -9,7 +9,7 @@ function BookList({ books, onDelete, onUpdate }) {
     title: "",
     author: "",
     genre: "Romance",
-    date: "",
+    readAt: "",
   });
 
   useEffect(() => {
@@ -19,7 +19,7 @@ function BookList({ books, onDelete, onUpdate }) {
         title: currentEditingBook.title || "",
         author: currentEditingBook.author || "",
         genre: currentEditingBook.genre || "Romance",
-        date: currentEditingBook.date || "",
+        readAt: currentEditingBook.readAt || "",
       });
       setFormVisible(true);
     } else {
@@ -28,13 +28,14 @@ function BookList({ books, onDelete, onUpdate }) {
         title: "",
         author: "",
         genre: "Romance",
-        date: "",
+        readAt: "",
       });
     }
   }, [currentEditingBook]);
 
   const handleStartEdit = (book) => {
     setCurrentEditingBook(book);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handleInputChange = (e) => {
@@ -61,13 +62,16 @@ function BookList({ books, onDelete, onUpdate }) {
 
   return (
     <div className="flex flex-col justify-center items-center">
-      <h1 className="text-4xl font-bold mb-4">Lista de Livros</h1>
+      <h1 className="text-4xl font-bold mb-8">Lista de Livros</h1>
 
       <div className={formVisible ? "" : "hidden"}>
         <form
           onSubmit={handleSubmitUpdate}
-          className="m-8 w-64 sm:w-96 border-2 border-black rounded-lg p-6"
+          className="m-8 w-64 sm:w-96 bg-white p-8 shadow-lg rounded-md"
         >
+          <div className="flex items-center justify-center mb-4">
+            <p className="text-2xl font-bold">Editar</p>
+          </div>
           <div className="mb-4 hidden">
             <label
               htmlFor="form-id"
@@ -135,15 +139,18 @@ function BookList({ books, onDelete, onUpdate }) {
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md"
               required
             >
+              <option value="Autoajuda">Autoajuda</option>
+              <option value="Thriller Psicológico">Thriller Psicológico</option>
               <option value="Romance">Romance</option>
-              <option value="Suspense">Suspense</option>
+              <option value="Distopia">Distopia</option>
+              <option value="Memórias">Memórias</option>
+              <option value="Ficção Histórica">Ficção Histórica</option>
+              <option value="Ficção Literária">Ficção Literária</option>
               <option value="Fantasia">Fantasia</option>
-              <option value="Ficção Científica">Ficção Científica</option>
-              <option value="Mistério">Mistério</option>
-              <option value="Terror">Terror</option>
-              <option value="Biografia">Biografia</option>
-              <option value="Aventura">Aventura</option>
-              <option value="Outros">Outros</option>
+              <option value="Literatura Clássica">Literatura Clássica</option>
+              <option value="Ficção Filosófica">Ficção Filosófica</option>
+              <option value="Literatura Modernista">Literatura Modernista</option>
+              <option value="Romance Naturalista">Romance Naturalista</option>
             </select>
           </div>
 
@@ -157,8 +164,8 @@ function BookList({ books, onDelete, onUpdate }) {
             <input
               type="date"
               id="form-date"
-              name="date"
-              value={formData.date}
+              name="readAt"
+              value={formData.readAt}
               onChange={handleInputChange}
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md"
             />
@@ -168,13 +175,13 @@ function BookList({ books, onDelete, onUpdate }) {
             <button
               type="button"
               onClick={handleCancelEdit}
-              className="px-4 py-2 rounded-md text-sm bg-gray-300"
+              className="px-4 py-2 rounded-md text-sm bg-red-500 text-white font-bold transition duration-100 hover:bg-red-600"
             >
               Cancelar
             </button>
             <button
               type="submit"
-              className="px-4 py-2 rounded-md text-sm bg-gray-300"
+              className="px-4 py-2 rounded-md text-sm bg-green-500 text-white font-bold transition duration-100 hover:bg-green-600"
             >
               Atualizar Livro
             </button>
@@ -184,12 +191,23 @@ function BookList({ books, onDelete, onUpdate }) {
       {books.map((book) => (
         <div
           key={book.id}
-          className="flex gap-4 mb-2 items-center p-2 border-b w-full max-w-2xl justify-between"
+          className="flex gap-4 mb-2 items-center py-2 px-4 border-b w-full max-w-xl justify-between bg-white shadow-md"
         >
-          <p className="">
-            {book.id}. {book.title} - {book.author} - {book.genre} - {book.date}
-          </p>
-          <div className="flex gap-2">
+          <div className="flex flex-col gap-2 px-2 py-4">
+            <p className="">
+              <span className="font-bold">Título:</span> {book.title}
+            </p>
+            <p className="">
+              <span className="font-bold">Autor:</span> {book.author}
+            </p>
+            <p className="">
+              <span className="font-bold">Gênero:</span> {book.genre}
+            </p>
+            <p className="">
+              <span className="font-bold">Lido em:</span> {book.readAt}
+            </p>
+          </div>
+          <div className="flex flex-col gap-2">
             <button
               className="bg-gray-300 py-1 px-3 rounded text-sm"
               onClick={() => handleStartEdit(book)}
